@@ -7,3 +7,6 @@ ENV/
 
 # Autobackup files (ones ending in ~)
 *~
+
+# libtcod assets (some are symlinks)
+libtcod*
