@@ -1,18 +1,30 @@
 import libtcodpy as libtcod
-import input_handlers as inputs
+from input_handlers import handle_keys
+from entity import Entity
+from render_functions import clear_all, render_all
+from map_objects.game_map import GameMap
 
 
 def main():
     SCREEN_WIDTH = 80
     SCREEN_HEIGHT = 50
+    map_width = 80      # TODO The all-caps are giving me a headache
+    map_height = 45     # TODO but it might just be the small screen
 
-    player_x = int(SCREEN_WIDTH / 2)
-    player_y = int(SCREEN_HEIGHT / 2)
+    colors = {
+        'dark_wall': libtcod.Color(0, 0, 100),
+        'dark_ground': libtcod.Color(50, 50, 150)
+    }
+
+    player = Entity(int(SCREEN_WIDTH / 2), int(SCREEN_HEIGHT / 2), '@', libtcod.white)
+    npc = Entity(int(SCREEN_WIDTH / 2 - 5), int(SCREEN_HEIGHT / 2), '@', libtcod.yellow)
+    entities = [npc, player]
 
     libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
     libtcod.console_init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'libtcod tutorial revised', False)
 
     con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
+    game_map = GameMap(map_width, map_height)
 
     key = libtcod.Key()
     mouse = libtcod.Mouse()
@@ -20,14 +32,11 @@ def main():
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
 
-        libtcod.console_set_default_foreground(con, libtcod.white)  # Color of character on foreground in window 0
-        libtcod.console_put_char(con, player_x, player_y, '@', libtcod.BKGND_NONE)  # Places the character (@)
-        libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
+        render_all(con, entities, game_map, SCREEN_WIDTH, SCREEN_HEIGHT, colors)
         libtcod.console_flush()     # Presents everything on the screen
+        clear_all(con, entities)    # Erases the old positions
 
-        libtcod.console_put_char(con, player_x, player_y, ' ', libtcod.BKGND_NONE)  # Replaces @ when it moves
-
-        action = inputs.handle_keys(key)
+        action = handle_keys(key)
 
         move = action.get('move')
         exit = action.get('exit')
@@ -35,8 +44,8 @@ def main():
 
         if move:
             dx, dy = move
-            player_x += dx
-            player_y += dy
+            if not game_map.is_blocked(player.x + dx, player.y + dy):
+                player.move(dx, dy)
         if exit:
             return True
         if fullscreen:

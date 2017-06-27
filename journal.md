@@ -37,3 +37,9 @@ I'm adding the libtcod assets to my .gitignore, at least.
 
 Let's really get started!
 Note: Computer planes have positive x going right, positive y going down. Crazy, I know! I've seen it so often and I still need to remember!
+
+Ok so at the end of it all that went well. The guide seems pretty straightforward and clear, for the most part.
+I'm feeling like I do have some power with libtcod.
+I did use 'solids' instead of 'blocked' as an attribute for tile.Tile. It might get confusing, so I may just change it back.
+Otherwise, that wraps up the week. Perhaps I'll make a branch and see where I can take this from here.
+ 
