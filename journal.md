@@ -1,12 +1,11 @@
-Hello!
-######
+## Hello!
 
 My contribution to the r/roguelikedev all-encompassing roguelike tutorial will not only be a roguelike, but a journal/guide of sorts to document what I did and possibly give insight for others doing the same thing
 
 So let's get started just to get started, and we'll make it pretty in the future (will we, though?)
 
-Day 1 -- 20 June 2017
-#######################
+## Day 1 -- 20 June 2017
+
 So what did I do on day 1?
 -I hurt my neck, for one thing (something related to waking up).
 -I created a working folder I called 'roguelike/' and created a virtual environment in it running Python 3.6.
@@ -20,8 +19,8 @@ So what did I do on day 1?
 That's all that's outlined for today, and I think it's a solid prep process for the beginnings of a project!
 
 
-Day 2 -- 27 June 2017
-######################
+## Day 2 -- 27 June 2017
+
 A new challenger approaches, and it's u/AetherGrey, to usurp the mods and take his rightful place as tutorial guy.
 READ: He's revamping the tutorial (for Python 3, which is good) and doing it alongside what's happening now.
 So I'm going to be following that! It's on rogueliketutorials.com.
