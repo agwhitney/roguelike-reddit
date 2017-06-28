@@ -4,8 +4,8 @@ My contribution to the r/roguelikedev all-encompassing roguelike tutorial will n
 
 So let's get started just to get started, and we'll make it pretty in the future (will we, though?)
 
-## Day 1 -- 20 June 2017
-
+## Week 1 -- 20 June 2017
+-----
 So what did I do on day 1?
 -I hurt my neck, for one thing (something related to waking up).
 -I created a working folder I called 'roguelike/' and created a virtual environment in it running Python 3.6.
@@ -19,8 +19,8 @@ So what did I do on day 1?
 That's all that's outlined for today, and I think it's a solid prep process for the beginnings of a project!
 
 
-## Day 2 -- 27 June 2017
-
+## Week 2 -- 27 June 2017
+-----
 A new challenger approaches, and it's u/AetherGrey, to usurp the mods and take his rightful place as tutorial guy.
 READ: He's revamping the tutorial (for Python 3, which is good) and doing it alongside what's happening now.
 So I'm going to be following that! It's on rogueliketutorials.com.
@@ -41,4 +41,39 @@ Ok so at the end of it all that went well. The guide seems pretty straightforwar
 I'm feeling like I do have some power with libtcod.
 I did use 'solids' instead of 'blocked' as an attribute for tile.Tile. It might get confusing, so I may just change it back.
 Otherwise, that wraps up the week. Perhaps I'll make a branch and see where I can take this from here.
- 
+
+
+### 28 June 2017
+-----
+I put this on Github, and tbh I'm not sure why I didn't just do it from the beginning.
+I always regret that...
+
+I cleaned up a few things (.gitignore, readme, this).
+
+Here's the how-to for libtcod and sdl2 setup on Linux:
+
+1. **SDL2**
+
+  * `sudo apt-get install libsdl2-dev` -> easy peasy
+
+2. **libtcod**
+
+  * Start in your home directory (it doesn't really matter but this is an alright place for it): `cd ~`
+
+  * Get the most current (1.6.3 as of now) from bitbucket: `wget https://bitbucket.org/libtcod/libtcod/downloads/20170226-libtcod-1.6.3.tbz2`
+
+  * Unpack the tarball (Linux zip flavor): `tar xf 20170226-libtcod-1.6.3.tbz2`
+
+  * Don't need it anymore, so you might as well `rm 20170226-libtcod-1.6.3.tbz2`
+
+  * Into the build folder: `cd 20170226-libtcod-1.6.3/build/autotools`
+
+  * `autoreconf -i` -- this needs the packages autoconf  and libtool: `sudo apt-get install {package}`
+
+  * `./configure`
+
+  * `make`
+
+  * And then just take the things you need and put them in your project folder: (from the root libtcod folder): `cp -dr build/autotools/.libs/libtcod.so* python/libtcodpy {project folder}`
+
+Done!
