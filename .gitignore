@@ -1,6 +1,7 @@
 # libtcod stuff
 libtcod*
 libtcodpy/
+SDL2.dll
 
 
 # Byte-compiled / optimized / DLL files
