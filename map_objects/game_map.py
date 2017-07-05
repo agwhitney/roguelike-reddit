@@ -10,11 +10,15 @@ class GameMap:
         self.tiles = self.initialize_tiles()
 
     def initialize_tiles(self):
+        """Initialize solid tiles based on the map size; rooms/tunnels are 'carved' out of this."""
         tiles = [[Tile(True) for y in range(self.height)] for x in range(self.width)]
         return tiles
 
     def make_map(self, max_rooms, room_min_size, room_max_size, map_width, map_height, player):
-        rooms = []
+        """Randomly generates rooms and tunnels between them based on the map dimensions,
+        and also sets the player's position to be the center of the first room.
+        """
+        rooms = []      # List of room objects
         num_rooms = 0
 
         for r in range(max_rooms):
@@ -33,13 +37,10 @@ class GameMap:
                 if new_room.intersect(other_room):
                     break
             else:   # Python for-else: the else runs if for doesn't break!
-                # No intersections: room is valid
-                # "Paint it" to the map's tiles
+                # No intersections: room is valid - so actually create it!
                 self.create_room(new_room)
-
                 # center coordinates of new room, for later
                 new_x, new_y = new_room.center()
-
                 if num_rooms == 0:
                     # This is the first room, where the player starts
                     player.x = new_x
@@ -47,7 +48,6 @@ class GameMap:
                 else:
                     # all rooms after the first: connect to previous with a tunnel
                     prev_x, prev_y = rooms[num_rooms - 1].center()
-
                     # flip a coin on moving horiz then vert, or vert then horiz
                     if randint(0, 1) == 1:
                         self.create_h_tunnel(prev_x, new_x, prev_y)
@@ -55,14 +55,13 @@ class GameMap:
                     else:
                         self.create_v_tunnel(prev_y, new_y, prev_x)
                         self.create_h_tunnel(prev_x, new_x, new_y)
-
                 # finally, append the new room to the list
                 rooms.append(new_room)
                 num_rooms += 1
 
     def create_room(self, room):
-        # Go through the tiles in the room and make select ones passable.
-        for x in range(room.x1 + 1, room.x2):   # x + 1 guarantees a wall
+        """Makes the tile objects in a room (rectangle object) passable, like a real room."""
+        for x in range(room.x1 + 1, room.x2):   # + 1 guarantees a wall between two rooms
             for y in range(room.y1 + 1, room.y2):
                 self.tiles[x][y].solid = False
                 self.tiles[x][y].block_sight = False

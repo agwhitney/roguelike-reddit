@@ -2,6 +2,7 @@ class Tile:
     """
     A tile on a map. It may or may not be solid,
     and may or may not block sight.
+
     'solid' is changed from 'blocked' in the tutorial
     """
     def __init__(self, solid, block_sight=None):

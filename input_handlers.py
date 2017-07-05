@@ -1,4 +1,4 @@
-"""Handles inputs from mouse and keyboard and passes them to the engine"""
+"""Handles inputs from mouse and keyboard and returns them as a 'string : action' dictionary"""
 import libtcodpy as libtcod
 
 

@@ -5,7 +5,7 @@ My contribution to the r/roguelikedev all-encompassing roguelike tutorial will n
 So let's get started just to get started, and we'll make it pretty in the future (will we, though?)
 
 ## Week 1 -- 20 June 2017
------
+
 So what did I do on day 1?
 -I hurt my neck, for one thing (something related to waking up).
 -I created a working folder I called 'roguelike/' and created a virtual environment in it running Python 3.6.
@@ -20,7 +20,7 @@ That's all that's outlined for today, and I think it's a solid prep process for 
 
 
 ## Week 2 -- 27 June 2017
------
+
 A new challenger approaches, and it's u/AetherGrey, to usurp the mods and take his rightful place as tutorial guy.
 READ: He's revamping the tutorial (for Python 3, which is good) and doing it alongside what's happening now.
 So I'm going to be following that! It's on rogueliketutorials.com.
@@ -44,7 +44,7 @@ Otherwise, that wraps up the week. Perhaps I'll make a branch and see where I ca
 
 
 ### 28 June 2017
------
+
 I put this on Github, and tbh I'm not sure why I didn't just do it from the beginning.
 I always regret that...
 
@@ -77,3 +77,16 @@ Here's the how-to for libtcod and sdl2 setup on Linux:
   * And then just take the things you need and put them in your project folder: (from the root libtcod folder): `cp -dr build/autotools/.libs/libtcod.so* python/libtcodpy {project folder}`
 
 Done!
+
+
+## Week 3 - 4 July 2017
+
+Week 3 was all about map generation, using the game map and tile objects created before and tying them together.
+This journal doesn't really feel necessary, though I continue to type.
+Something interesting about the tunnels: they connect rooms that are placed totally randomly, and could cross other rooms
+in the process. It makes the tunnel system *look* a little more complex, but if you follow it in a straight line you see
+that it's going from a center to another center, just as it was coded! If you wanted, you could follow the tunnels to see
+exactly how the map was generated.
+
+I could move ahead, but instead I'm going to try my own thing (which will happen soon anyway).
+I'd like to have my variables stored externally in a json file, and I'd like to learn more json - so that's what I plan to do.
