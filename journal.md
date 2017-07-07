@@ -90,3 +90,16 @@ exactly how the map was generated.
 
 I could move ahead, but instead I'm going to try my own thing (which will happen soon anyway).
 I'd like to have my variables stored externally in a json file, and I'd like to learn more json - so that's what I plan to do.
+
+### 7 July 2017
+
+I found plenty of things saying *not* to use json for config files but:
+
+1. Python's ConfigParser actually seems okay
+2. YAML has package dependencies to read
+3. I think a lot of people use json and it's high time that I do too.
+
+Working with json seems really simple, and now I have an external file to store map and screen size variables.
+I'm not sure what else to put in there (key-bindings, I suppose), but it was actually pretty simple to load the settings with json.
+I'm wondering if I can load a default settings file, and overwrite it part-wise to have user-defined settings.
+I'm not sure how a user would define them! but it's still a handy feature, and I think ConfigParser has it.
