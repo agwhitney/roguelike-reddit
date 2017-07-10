@@ -12,3 +12,5 @@ class Tile:
         if block_sight is None:
             block_sight = solid   # Changing the passed var, not the attribute
         self.block_sight = block_sight
+
+        self.explored = False

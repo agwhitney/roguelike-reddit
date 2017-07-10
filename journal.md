@@ -103,3 +103,19 @@ Working with json seems really simple, and now I have an external file to store 
 I'm not sure what else to put in there (key-bindings, I suppose), but it was actually pretty simple to load the settings with json.
 I'm wondering if I can load a default settings file, and overwrite it part-wise to have user-defined settings.
 I'm not sure how a user would define them! but it's still a handy feature, and I think ConfigParser has it.
+
+## Week 4 - 11 July 2017
+
+I'm actually starting this a day before from boredom.
+I want to get some insight on entity interaction that I can use for chess, but I think that might actually be next week.
+I think the benefit libtcod has over the regular console for chess is layers.
+There's a tile object with an entity object above it: not one or the other.
+Perhaps I can redefine the chess board as a container of Tile and Piece objects?
+
+I'm digressing.
+
+Week 4 is Field of View.
+
+Field of view is really cool. I'm definitely going to play around with the algorithms, and try and add torches.
+
+
