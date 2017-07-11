@@ -118,4 +118,8 @@ Week 4 is Field of View.
 
 Field of view is really cool. I'm definitely going to play around with the algorithms, and try and add torches.
 
+Week 4 is also Enemy placement! 
+There's a little bit of interaction, and it seems a bit inefficient to check *every* entity to see if you've bumped, but I guess that just comes wi th the territory.
+Fairly straightforward, and I'm excited to work with an AI next week (I think). 
 
+I'd still like to add torches, but I'll probably try to take more of this into chess.
