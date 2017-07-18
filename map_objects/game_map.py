@@ -1,8 +1,11 @@
+import libtcodpy as libtcod
 from random import randint
+from entity import Entity
 from map_objects.tile import Tile
 from map_objects.rectangle import Rect
-from entity import Entity
-import libtcodpy as libtcod
+from components.fighter import Fighter
+from components.ai import BasicMonster
+from render_functions import RenderOrder
 
 
 class GameMap:
@@ -83,7 +86,8 @@ class GameMap:
             self.tiles[x][y].solid = False
             self.tiles[x][y].block_sight = False
 
-    def place_entities(self, room, entities, max_monsters_per_room):
+    @staticmethod
+    def place_entities(room, entities, max_monsters_per_room):
         """Places monsters in the room"""
         number_of_monsters = randint(0, max_monsters_per_room)
 
@@ -95,9 +99,17 @@ class GameMap:
             # 80% orc, 20% troll. Makes sure there are no entities already at the position
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 if randint(0, 100) < 80:
-                    monster = Entity(x, y, 'o', libtcod.desaturated_green, 'Orc', blocks=True)
+                    fighter_component = Fighter(hp=10, defense=0, power=3)
+                    ai_component = BasicMonster()
+
+                    monster = Entity(x, y, 'o', libtcod.desaturated_green, 'Orc', blocks=True,
+                                     render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
                 else:
-                    monster = Entity(x, y, 'T', libtcod.darker_green, 'Troll', blocks=True)
+                    fighter_component = Fighter(hp=16, defense=1, power=4)
+                    ai_component = BasicMonster()
+
+                    monster = Entity(x, y, 'T', libtcod.darker_green, 'Troll', blocks=True,
+                                     render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
 
                 entities.append(monster)
 

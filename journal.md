@@ -119,7 +119,27 @@ Week 4 is Field of View.
 Field of view is really cool. I'm definitely going to play around with the algorithms, and try and add torches.
 
 Week 4 is also Enemy placement! 
-There's a little bit of interaction, and it seems a bit inefficient to check *every* entity to see if you've bumped, but I guess that just comes wi th the territory.
+There's a little bit of interaction, and it seems a bit inefficient to check *every* entity to see if you've bumped, but I guess that just comes with the territory.
 Fairly straightforward, and I'm excited to work with an AI next week (I think). 
 
 I'd still like to add torches, but I'll probably try to take more of this into chess.
+
+## Week 5 - 18 July 2017
+### Part 6 - Making Combat Kinda Serious
+Today is "Going Berserk!" which I think is better combat, and also the GUI.
+
+It's been a while since I've looked at this (been looking at chess), so it's welcoming to come back to it.
+
+It begins with *Compositional* Programming - interested!
+
+Compositional Programming seems interesting, though I'm not sure what the benefits might be over inheritance.
+Update: Compositional programming lets entities inherit what they need to, rather than having it be a strict parent of something else.
+
+There's a lot going on in this lesson - that, AI and path-making algorithms for them, and prep for GUI things.
+
+In the Fighter component we have the results of combat being returned as a dictionary with a message.
+This is pretty much the same as how we're already handling key presses - the object returns a result and a standard result,
+but it's up to the engine as to what is actually done with it.
+I think I like this method.
+I feel as if it reduces complexity because things aren't doing more than they need to be, it seems easier for notekeeping,
+and all the engine has to do is manipulate results rather than create them.
