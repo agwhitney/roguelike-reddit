@@ -53,27 +53,16 @@ I cleaned up a few things (.gitignore, readme, this).
 Here's the how-to for libtcod and sdl2 setup on Linux:
 
 1. **SDL2**
-
   * `sudo apt-get install libsdl2-dev` -> easy peasy
-
 2. **libtcod**
-
   * Start in your home directory (it doesn't really matter but this is an alright place for it): `cd ~`
-
   * Get the most current (1.6.3 as of now) from bitbucket: `wget https://bitbucket.org/libtcod/libtcod/downloads/20170226-libtcod-1.6.3.tbz2`
-
   * Unpack the tarball (Linux zip flavor): `tar xf 20170226-libtcod-1.6.3.tbz2`
-
   * Don't need it anymore, so you might as well `rm 20170226-libtcod-1.6.3.tbz2`
-
   * Into the build folder: `cd 20170226-libtcod-1.6.3/build/autotools`
-
   * `autoreconf -i` -- this needs the packages autoconf  and libtool: `sudo apt-get install {package}`
-
   * `./configure`
-
   * `make`
-
   * And then just take the things you need and put them in your project folder: (from the root libtcod folder): `cp -dr build/autotools/.libs/libtcod.so* python/libtcodpy {project folder}`
 
 Done!
@@ -143,3 +132,9 @@ but it's up to the engine as to what is actually done with it.
 I think I like this method.
 I feel as if it reduces complexity because things aren't doing more than they need to be, it seems easier for notekeeping,
 and all the engine has to do is manipulate results rather than create them.
+
+### Part 7 - GUI
+
+Went through it pretty quickly; it's fairly simple and flexible, and I think there's plenty of room to add more detail.
+It is primarily text-based - but the whole engine is ;)
+
