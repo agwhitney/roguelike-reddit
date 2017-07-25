@@ -1,5 +1,4 @@
-"""Item component. For starters, it doesn't need anything other than to be present.
-"""
+"""Item component. Takes items and their functions from elsewhere"""
 
 
 class Item:

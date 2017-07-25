@@ -107,9 +107,9 @@ Week 4 is Field of View.
 
 Field of view is really cool. I'm definitely going to play around with the algorithms, and try and add torches.
 
-Week 4 is also Enemy placement! 
+Week 4 is also Enemy placement!
 There's a little bit of interaction, and it seems a bit inefficient to check *every* entity to see if you've bumped, but I guess that just comes with the territory.
-Fairly straightforward, and I'm excited to work with an AI next week (I think). 
+Fairly straightforward, and I'm excited to work with an AI next week (I think).
 
 I'd still like to add torches, but I'll probably try to take more of this into chess.
 
@@ -140,4 +140,8 @@ It is primarily text-based - but the whole engine is ;)
 
 ## Week 6 - 25 July 2017
 
-Has Part 8 about Items and Inventory and Part 9 about Ranged Combat and Spells
+Has Part 8 about Items and Inventory and Part 9 about Ranged Combat and Spells.
+
+I think in part 8 the game goes from Python 3.x to Python 3.6.
+I'm not sure if dictionary unpacking syntax (`**dict`) is a) what I think it is or b) present previously.
+I'll have to check and make note.

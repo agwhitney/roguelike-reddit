@@ -15,6 +15,9 @@ def handle_keys(key, game_state):
     elif game_state == GameStates.PLAYER_DEAD:
         return handle_player_dead_keys(key)
 
+    elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
+        return handle_inventory_keys(key)
+
     return {}
 
 
@@ -39,9 +42,13 @@ def handle_player_turn_keys(key):
     elif key_char == 'n':
         return {'move': (1, 1)}
 
-    # Pickup item
+    # Pick up item
     if key_char == 'g':
         return {'pickup': True}
+
+    # Drop item
+    if key_char == 'd':
+        return {'drop_inventory': True}
 
     # Inventory Menu
     if key_char == 'i':
