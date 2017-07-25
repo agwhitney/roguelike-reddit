@@ -138,3 +138,6 @@ and all the engine has to do is manipulate results rather than create them.
 Went through it pretty quickly; it's fairly simple and flexible, and I think there's plenty of room to add more detail.
 It is primarily text-based - but the whole engine is ;)
 
+## Week 6 - 25 July 2017
+
+Has Part 8 about Items and Inventory and Part 9 about Ranged Combat and Spells
