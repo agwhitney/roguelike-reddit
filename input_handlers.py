@@ -93,3 +93,5 @@ def handle_inventory_keys(key):
         return {'fullscreen': True}
     elif key.vk == libtcod.KEY_ESCAPE:
         return {'exit': True}
+
+    return {}

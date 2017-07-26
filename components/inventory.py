@@ -47,7 +47,7 @@ class Inventory:
 
         return results
 
-    def dop_item(self, item):
+    def drop_item(self, item):
         results = []
         item.x = self.owner.x
         item.y = self.owner.y

@@ -146,7 +146,8 @@ def main():
             previous_game_state = game_state
             game_state = GameStates.DROP_INVENTORY
 
-        if inventory_index is not None and previous_game_state != GameStates.PLAYER_DEAD and inventory_index < len(player.inventory.items):
+        if inventory_index is not None and previous_game_state != GameStates.PLAYER_DEAD and inventory_index < len(
+                player.inventory.items):
             item = player.inventory.items[inventory_index]
 
             if game_state == GameStates.SHOW_INVENTORY:
@@ -186,7 +187,7 @@ def main():
                 game_state = GameStates.ENEMY_TURN
 
             if item_consumed:
-                game_state = GameStates.ENEMY
+                game_state = GameStates.ENEMY_TURN
 
             if item_dropped:
                 entities.append(item_dropped)
