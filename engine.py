@@ -1,5 +1,5 @@
 import libtcodpy as libtcod
-from input_handlers import handle_keys
+from input_handlers import handle_keys, handle_mouse
 from entity import Entity, get_blocking_entities_at_location
 from components.fighter import Fighter
 from components.inventory import Inventory
@@ -79,6 +79,8 @@ def main():
     game_state = GameStates.PLAYERS_TURN
     previous_game_state = game_state
 
+    targeting_item = None
+
     # -----------------
     # GAME ENGINE
     # -----------------
@@ -99,6 +101,7 @@ def main():
         # ACTION HANDLERS
 
         action = handle_keys(key, game_state)
+        mouse_action = handle_mouse(mouse)
 
         move = action.get('move')
         pickup = action.get('pickup')
@@ -107,6 +110,9 @@ def main():
         inventory_index = action.get('inventory_index')
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
+
+        left_click = mouse_action.get('left_click')
+        right_click = mouse_action.get('right_click')
 
         player_turn_results = []
 
@@ -151,19 +157,33 @@ def main():
             item = player.inventory.items[inventory_index]
 
             if game_state == GameStates.SHOW_INVENTORY:
-                player_turn_results.extend(player.inventory.use(item))
+                player_turn_results.extend(player.inventory.use(item, entities=entities, fov_map=fov_map))
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
 
-        if exit:
-            # Exit inventory screen; or exit game
-            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
-                game_state = previous_game_state
-            else:
-                return True
+        if game_state == GameStates.TARGETING:
+            if left_click:
+                target_x, target_y = left_click
+
+                item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map=fov_map,
+                                                        target_x=target_x, target_y=target_y)
+                player_turn_results.extend(item_use_results)
+            elif right_click:
+                player_turn_results.append({'targeting_cancelled': True})
 
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
+
+        if exit:
+            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
+                game_state = previous_game_state
+            elif game_state == GameStates.TARGETING:
+                game_state = previous_game_state
+                player_turn_results.append({'targeting_cancelled': True})
+            else:
+                return True
+
+        # PLAYER TURN RESULTS
 
         for player_turn_result in player_turn_results:
             message = player_turn_result.get('message')
@@ -171,6 +191,7 @@ def main():
             item_added = player_turn_result.get('item_added')
             item_consumed = player_turn_result.get('consumed')
             item_dropped = player_turn_result.get('item_dropped')
+            targeting = player_turn_result.get('targeting')
 
             if message:
                 message_log.add_message(message)
@@ -192,6 +213,14 @@ def main():
             if item_dropped:
                 entities.append(item_dropped)
                 game_state = GameStates.ENEMY_TURN
+
+            if targeting:
+                previous_game_state = GameStates.PLAYERS_TURN   # Canceling doesn't go to inventory
+                game_state = GameStates.TARGETING
+
+                targeting_item = targeting
+
+                message_log.add_message(targeting_item.item.targeting_message)
 
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
