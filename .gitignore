@@ -6,6 +6,9 @@ SDL2.dll
 # Pycharm .idea/
 .idea/
 
+# Saving/Loading File
+savegame.dat
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

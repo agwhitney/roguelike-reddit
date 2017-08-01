@@ -145,3 +145,11 @@ Has Part 8 about Items and Inventory and Part 9 about Ranged Combat and Spells.
 I think in part 8 the game goes from Python 3.x to Python 3.6.
 I'm not sure if dictionary unpacking syntax (`**dict`) is a) what I think it is or b) present previously.
 I'll have to check and make note.
+
+
+## Week 7 - 1 August 2017
+
+Loading and stuff!
+
+Starts with splitting engine.py's main() into parts.
+All that config stuff I did on my own will have to be shuffled around, so for now I think I'll just leave it where it is and worry about it later.
