@@ -52,10 +52,14 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         mouse_action = handle_mouse(mouse)
 
         move = action.get('move')
+        wait = action.get('wait')
         pickup = action.get('pickup')
         show_inventory = action.get('show_inventory')
         drop_inventory = action.get('drop_inventory')
         inventory_index = action.get('inventory_index')
+        take_stairs = action.get('take_stairs')
+        level_up = action.get('level_up')
+        show_character_screen = action.get('show_character_screen')
         exit = action.get('exit')
         fullscreen = action.get('fullscreen')
 
@@ -81,6 +85,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                     player.move(dx, dy)
                     fov_recompute = True
 
+            game_state = GameStates.ENEMY_TURN
+
+        if wait:
             game_state = GameStates.ENEMY_TURN
 
         elif pickup and game_state == GameStates.PLAYERS_TURN:
@@ -109,6 +116,35 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
 
+        if take_stairs and game_state == GameStates.PLAYERS_TURN:
+            for entity in entities:
+                if entity.stairs and entity.x == player.x and entity.y == player.y:
+                    entities = game_map.next_floor(player, message_log, constants)
+                    fov_map = initialize_fov(game_map)
+                    fov_recompute = True
+                    libtcod.console_clear(con)
+
+                    break
+            else:   # No break
+                message_log.add_message(Message("There are no stairs here.", libtcod.yellow))
+
+        if level_up:
+            if level_up == 'hp':
+                player.fighter.max_hp += 20
+                player.fighter.hp += 20
+
+            elif level_up == 'str':
+                player.fighter.power += 1
+
+            elif level_up == 'def':
+                player.fighter.defense += 1
+
+            game_state = previous_game_state
+
+        if show_character_screen:
+            previous_game_state = game_state
+            game_state = GameStates.CHARACTER_SCREEN
+
         if game_state == GameStates.TARGETING:
             if left_click:
                 target_x, target_y = left_click
@@ -116,6 +152,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map=fov_map,
                                                         target_x=target_x, target_y=target_y)
                 player_turn_results.extend(item_use_results)
+
             elif right_click:
                 player_turn_results.append({'targeting_cancelled': True})
 
@@ -123,18 +160,21 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
 
         if exit:
-            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
-                # Return to game from inventory menu
+            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY, GameStates.CHARACTER_SCREEN):
+                # Return to gameplay state from above states
                 game_state = previous_game_state
+
             elif game_state == GameStates.TARGETING:
                 # Return to game from targeting state
                 game_state = previous_game_state
                 player_turn_results.append({'targeting_cancelled': True})
+
             elif game_state == GameStates.PLAYER_DEAD:
                 # Delete a save file if player exits after dying
                 if os.path.isfile('savegame.dat'):
                     os.remove('savegame.dat')
                 return True
+
             else:
                 # Create a save file if player exits while alive
                 save_game(player, entities, game_map, message_log, game_state)
@@ -149,6 +189,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             item_consumed = player_turn_result.get('consumed')
             item_dropped = player_turn_result.get('item_dropped')
             targeting = player_turn_result.get('targeting')
+            targeting_cancelled = player_turn_result.get('targeting_cancelled')
+            xp = player_turn_result.get('xp')
 
             if message:
                 message_log.add_message(message)
@@ -178,6 +220,21 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 targeting_item = targeting
 
                 message_log.add_message(targeting_item.item.targeting_message)
+
+            if targeting_cancelled:
+                game_state = previous_game_state
+                message_log.add_message(Message("Targeting cancelled."))
+
+            if xp:
+                leveled_up = player.level.add_xp(xp)    # Adds the xp and returns boolean re: a level-up
+                message_log.add_message(Message("You gained {} EXP".format(xp)))
+
+                if leveled_up:
+                    message_log.add_message(Message(
+                        "You've grown to level {}!".format(player.level.current_level), libtcod.yellow
+                    ))
+                    previous_game_state = game_state
+                    game_state = GameStates.LEVEL_UP
 
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
@@ -246,20 +303,27 @@ def main():
 
             new_game = action.get('new_game')
             load_saved_game = action.get('load_game')
+            fullscreen = action.get('fullscreen')
             exit_game = action.get('exit')
 
             if show_load_error_message and (new_game or load_saved_game or exit_game):
                 show_load_error_message = False
+
             elif new_game:
                 player, entities, game_map, message_log, game_state = get_game_variables(constants)
                 game_state = GameStates.PLAYERS_TURN
                 show_main_menu = False
+
             elif load_saved_game:
                 try:
                     player, entities, game_map, message_log, game_state = load_game()
                     show_main_menu = False
                 except FileNotFoundError:
                     show_load_error_message = True
+
+            elif fullscreen:
+                libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
+
             elif exit_game:
                 break
 
